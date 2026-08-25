@@ -104,6 +104,7 @@ export default function App() {
   const { surveyId, dealer, expires } = useUrlParams()
   const now = useLiveClock()
   const dealerName = dealer || 'Kayalami'
+  const venueName = `the Mahindra Festival of Motoring ${dealerName}`
 
   const [screen, setScreen] = useState('welcome')
   const [welcomeConsent, setWelcomeConsent] = useState(false)
@@ -298,7 +299,7 @@ export default function App() {
             <h1 className="text-xl font-bold text-[#1a1a1a] mb-2">Thank You!</h1>
             <p className="text-gray-600 mb-4">
               Your feedback has been submitted successfully and will help us improve your
-              experience at {dealerName}.
+              experience at {venueName}.
             </p>
             {submittedAt && (
               <p className="text-xs text-gray-400">Submitted {formatDateLocal(submittedAt)}</p>
@@ -443,7 +444,7 @@ export default function App() {
           {currentStep === 'trackVehicle' && (
             <div>
               <h2 className="text-base font-semibold text-[#1a1a1a]">
-                Which track and vehicle did you test drive at {dealerName}?
+                Which track and vehicle did you test-drive at {venueName}?
               </h2>
               <p className="text-sm text-slate-500 mt-1">{STEP_SUBTITLES.trackVehicle}</p>
               <hr className="border-gray-200 my-4" />
@@ -459,7 +460,7 @@ export default function App() {
           {currentStep === 'overall' && (
             <div>
               <h2 className="text-base font-semibold text-[#1a1a1a]">
-                How would you rate your overall Test Drive Experience at {dealerName}?
+                How would you rate your overall Test Drive Experience at {venueName}?
               </h2>
               <p className="text-sm text-slate-500 mt-1">{STEP_SUBTITLES.overall}</p>
               <hr className="border-gray-200 my-4" />
@@ -488,8 +489,8 @@ export default function App() {
           {currentStep === 'vehicle' && (
             <div>
               <h2 className="text-base font-semibold text-[#1a1a1a]">
-                Based on your test drive of the {vehicleDisplayName} at {dealerName}, how would
-                you rate the following aspects of the vehicle?
+                Based on your test drive of the {vehicleDisplayName} at {venueName}, how would you
+                rate the following aspects of the vehicle?
               </h2>
               <p className="text-sm text-slate-500 mt-1">
                 Please rate each aspect of the {vehicleDisplayName} separately
@@ -531,7 +532,7 @@ export default function App() {
             <div>
               <h2 className="text-base font-semibold text-[#1a1a1a]">
                 Would you like to share any additional feedback about your test drive at{' '}
-                {dealerName}?
+                {venueName}?
               </h2>
               <p className="text-sm text-slate-500 mt-1">{STEP_SUBTITLES.feedback}</p>
               <hr className="border-gray-200 my-4" />
