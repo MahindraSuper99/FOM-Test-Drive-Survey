@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-red: #e31837;
+  --color-ink: #1a1a1a;
+}
+
+html {
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply bg-gray-100;
+  color: #1a1a1a;
+}
+
+/* Manrope renders small-caps on some inputs in certain browsers; force normal variant */
+button,
+a,
+input,
+textarea,
+select {
+  font-variant: normal;
+  font-feature-settings: normal;
+}
