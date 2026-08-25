@@ -104,7 +104,7 @@ export default function App() {
   const { surveyId, dealer, expires } = useUrlParams()
   const now = useLiveClock()
   const dealerName = dealer || 'Kayalami'
-  const venueName = `the Mahindra Festival of Motoring ${dealerName}`
+  const venueName = `the Mahindra Festival of Motoring ${dealerName} event`
 
   const [screen, setScreen] = useState('welcome')
   const [welcomeConsent, setWelcomeConsent] = useState(false)
