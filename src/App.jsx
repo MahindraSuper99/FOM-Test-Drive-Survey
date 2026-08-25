@@ -111,6 +111,7 @@ export default function App() {
 
   const [selectedTrack, setSelectedTrack] = useState(null)
   const [selectedVehicle, setSelectedVehicle] = useState(null)
+  const vehicleDisplayName = selectedVehicle ? `Mahindra ${selectedVehicle}` : selectedVehicle
 
   const [overallExperience, setOverallExperience] = useState(null)
 
@@ -487,18 +488,18 @@ export default function App() {
           {currentStep === 'vehicle' && (
             <div>
               <h2 className="text-base font-semibold text-[#1a1a1a]">
-                Based on your test drive of the {selectedVehicle} at {dealerName}, how would you
-                rate the following aspects of the vehicle?
+                Based on your test drive of the {vehicleDisplayName} at {dealerName}, how would
+                you rate the following aspects of the vehicle?
               </h2>
               <p className="text-sm text-slate-500 mt-1">
-                Please rate each aspect of the {selectedVehicle} separately
+                Please rate each aspect of the {vehicleDisplayName} separately
               </p>
               <hr className="border-gray-200 my-4" />
               <div className="space-y-5">
                 <VehicleRatingRow
                   id="performance"
                   letter="a"
-                  label={`Overall performance of the ${selectedVehicle}`}
+                  label={`Overall performance of the ${vehicleDisplayName}`}
                   value={vehiclePerformance}
                   onChange={setVehiclePerformance}
                   feedback={vehiclePerformanceFeedback}
@@ -507,7 +508,7 @@ export default function App() {
                 <VehicleRatingRow
                   id="comfort"
                   letter="b"
-                  label={`Level of comfort of the ${selectedVehicle}`}
+                  label={`Level of comfort of the ${vehicleDisplayName}`}
                   value={vehicleComfort}
                   onChange={setVehicleComfort}
                   feedback={vehicleComfortFeedback}
@@ -516,7 +517,7 @@ export default function App() {
                 <VehicleRatingRow
                   id="features"
                   letter="c"
-                  label={`Features of the ${selectedVehicle}`}
+                  label={`Features of the ${vehicleDisplayName}`}
                   value={vehicleFeatures}
                   onChange={setVehicleFeatures}
                   feedback={vehicleFeaturesFeedback}
