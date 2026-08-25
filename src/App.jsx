@@ -72,7 +72,7 @@ function PageFooter() {
   )
 }
 
-function VehicleRatingRow({ letter, label, value, onChange, feedback, onFeedbackChange }) {
+function VehicleRatingRow({ id, letter, label, value, onChange, feedback, onFeedbackChange }) {
   const showElaboration = LOW_RATINGS.includes(value)
 
   return (
@@ -83,11 +83,11 @@ function VehicleRatingRow({ letter, label, value, onChange, feedback, onFeedback
       <RatingButtons value={value} onChange={onChange} />
       {showElaboration && (
         <div>
-          <Label htmlFor={`${label}-feedback`} className="block mt-2">
+          <Label htmlFor={`${id}-feedback`} className="block mt-2">
             Tell us more <span className="text-gray-400">(optional)</span>
           </Label>
           <Textarea
-            id={`${label}-feedback`}
+            id={`${id}-feedback`}
             rows={3}
             className="mt-1"
             value={feedback}
@@ -496,24 +496,27 @@ export default function App() {
               <hr className="border-gray-200 my-4" />
               <div className="space-y-5">
                 <VehicleRatingRow
+                  id="performance"
                   letter="a"
-                  label="Overall performance"
+                  label={`Overall performance of the ${selectedVehicle}`}
                   value={vehiclePerformance}
                   onChange={setVehiclePerformance}
                   feedback={vehiclePerformanceFeedback}
                   onFeedbackChange={setVehiclePerformanceFeedback}
                 />
                 <VehicleRatingRow
+                  id="comfort"
                   letter="b"
-                  label="Level of comfort"
+                  label={`Level of comfort of the ${selectedVehicle}`}
                   value={vehicleComfort}
                   onChange={setVehicleComfort}
                   feedback={vehicleComfortFeedback}
                   onFeedbackChange={setVehicleComfortFeedback}
                 />
                 <VehicleRatingRow
+                  id="features"
                   letter="c"
-                  label="Features"
+                  label={`Features of the ${selectedVehicle}`}
                   value={vehicleFeatures}
                   onChange={setVehicleFeatures}
                   feedback={vehicleFeaturesFeedback}
