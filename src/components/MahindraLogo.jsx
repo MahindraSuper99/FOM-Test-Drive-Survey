@@ -3,9 +3,7 @@ export default function MahindraLogo({ className = '', wordmark = false, wordmar
     <div className={`flex flex-col items-center ${className}`}>
       <img src="/mahindra-logo.png" alt="Mahindra" className="h-full w-full object-contain" />
       {wordmark && (
-        <span className={`mt-1 text-[10px] font-semibold tracking-[0.2em] uppercase ${wordmarkClassName}`}>
-          Mahindra
-        </span>
+        <span className={`mt-1.5 font-semibold tracking-wide ${wordmarkClassName}`}>mahindra</span>
       )}
     </div>
   )

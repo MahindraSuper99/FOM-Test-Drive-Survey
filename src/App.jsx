@@ -54,7 +54,11 @@ function PageHeader() {
       <div className="h-1 bg-black w-full" />
       <div className="bg-[#E31837] w-full">
         <div className="max-w-lg mx-auto px-6 py-4 flex items-center gap-3">
-          <MahindraLogo className="h-8 w-8 text-white" wordmark wordmarkClassName="text-white/90" />
+          <MahindraLogo
+            className="h-9 w-9 text-white"
+            wordmark
+            wordmarkClassName="text-white text-[11px]"
+          />
         </div>
       </div>
     </>
@@ -313,7 +317,11 @@ export default function App() {
         <div className="flex-1 flex items-center justify-center p-4">
           <Card className="max-w-lg w-full p-6 sm:p-8">
             <div className="flex flex-col items-center text-center">
-              <MahindraLogo className="h-16 w-16 text-gray-400 mb-4" />
+              <MahindraLogo
+                className="h-16 w-16 text-gray-400 mb-4"
+                wordmark
+                wordmarkClassName="text-gray-500 text-sm"
+              />
               <h1 className="text-2xl font-bold text-[#1a1a1a]">Mahindra Festival Of Motoring Test Drive Experience</h1>
               <p className="text-[#E31837] font-semibold text-sm mt-1">Mahindra South Africa</p>
               <p className="text-gray-500 text-sm mt-3 max-w-sm">
