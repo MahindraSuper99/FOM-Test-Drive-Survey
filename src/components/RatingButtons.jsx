@@ -16,7 +16,7 @@ export default function RatingButtons({ value, onChange, hideSelection = false }
             key={rating.value}
             type="button"
             onClick={() => onChange(rating.value)}
-            className={`rounded-lg px-0.5 py-2.5 text-[9px] sm:text-[11px] tracking-tight font-semibold text-white whitespace-nowrap transition-all ${rating.className} ${
+            className={`min-w-0 rounded-lg px-0.5 py-2.5 text-center text-[10px] sm:text-xs leading-tight break-words font-semibold text-white transition-all ${rating.className} ${
               isSelected
                 ? 'ring-2 ring-offset-1 ring-[#1a1a1a] scale-[1.03]'
                 : 'opacity-95 hover:opacity-100'
