@@ -4,9 +4,17 @@ import RatingButtons from './components/RatingButtons.jsx'
 import ReasonSelector from './components/ReasonSelector.jsx'
 import FeedbackTextarea from './components/FeedbackTextarea.jsx'
 import ProgressStepper from './components/ProgressStepper.jsx'
+import MahindraLogo from './components/MahindraLogo.jsx'
 import { sanitizeInput, formatDateLocal, isExpired } from './utils/helpers.js'
 
 const LOW_RATINGS = ['Poor', 'Unacceptable']
+
+const STEP_SUBTITLES = {
+  overall: 'Rate your overall test drive experience at the dealership',
+  dissatisfaction: 'Help us understand what could have gone better',
+  vehicle: 'Please rate each aspect of the vehicle separately',
+  feedback: 'Share any additional thoughts about your experience',
+}
 
 function useUrlParams() {
   return useMemo(() => {
@@ -30,12 +38,43 @@ function useLiveClock() {
   return now
 }
 
-function VehicleRatingRow({ label, value, onChange, feedback, onFeedbackChange }) {
+function daysUntil(expires) {
+  if (!expires) return null
+  const expiryDate = new Date(expires)
+  if (Number.isNaN(expiryDate.getTime())) return null
+  const diff = Math.ceil((expiryDate.getTime() - Date.now()) / 86_400_000)
+  return Math.max(0, diff)
+}
+
+function PageHeader() {
+  return (
+    <>
+      <div className="h-1 bg-black w-full" />
+      <div className="bg-[#E31837] w-full">
+        <div className="max-w-lg mx-auto px-6 py-4 flex items-center gap-3">
+          <MahindraLogo className="h-8 w-8 text-white" wordmark wordmarkClassName="text-white/90" />
+        </div>
+      </div>
+    </>
+  )
+}
+
+function PageFooter() {
+  return (
+    <footer className="text-center text-xs text-gray-400 py-6">
+      &copy; {new Date().getFullYear()} Mahindra South Africa. All rights reserved.
+    </footer>
+  )
+}
+
+function VehicleRatingRow({ letter, label, value, onChange, feedback, onFeedbackChange }) {
   const showElaboration = LOW_RATINGS.includes(value)
 
   return (
     <div className="space-y-2">
-      <Label className="block">{label}</Label>
+      <Label className="block text-slate-600">
+        <span className="font-semibold">{letter})</span> {label}
+      </Label>
       <RatingButtons value={value} onChange={onChange} />
       {showElaboration && (
         <div>
@@ -87,6 +126,7 @@ export default function App() {
   const [submitError, setSubmitError] = useState('')
 
   const expired = isExpired(expires)
+  const validDays = daysUntil(expires)
 
   const isDissatisfied = LOW_RATINGS.includes(overallExperience)
 
@@ -207,76 +247,139 @@ export default function App() {
 
   if (expired) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="max-w-md w-full p-8 text-center">
-          <h1 className="text-xl font-bold text-[#1a1a1a] mb-2">Survey Expired</h1>
-          <p className="text-gray-600">
-            This survey link has expired and is no longer accepting responses. Please contact
-            the dealership if you believe this is an error.
-          </p>
-        </Card>
+      <div className="min-h-screen flex flex-col bg-gray-100">
+        <PageHeader />
+        <div className="flex-1 flex items-center justify-center p-4">
+          <Card className="max-w-lg w-full p-8 text-center">
+            <h1 className="text-xl font-bold text-[#1a1a1a] mb-2">Survey Expired</h1>
+            <p className="text-gray-600">
+              This survey link has expired and is no longer accepting responses. Please contact
+              the dealership if you believe this is an error.
+            </p>
+          </Card>
+        </div>
+        <PageFooter />
       </div>
     )
   }
 
   if (screen === 'complete') {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="max-w-md w-full p-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
-            <svg viewBox="0 0 20 20" fill="currentColor" className="h-8 w-8 text-green-600">
-              <path
-                fillRule="evenodd"
-                d="M16.704 5.29a1 1 0 010 1.415l-7.25 7.25a1 1 0 01-1.415 0l-3.25-3.25a1 1 0 111.415-1.415L8.75 11.836l6.543-6.543a1 1 0 011.411-.003z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <h1 className="text-xl font-bold text-[#1a1a1a] mb-2">Thank You!</h1>
-          <p className="text-gray-600 mb-4">
-            Your feedback has been submitted successfully and will help us improve your
-            experience at {dealerName}.
-          </p>
-          {submittedAt && (
-            <p className="text-xs text-gray-400">Submitted {formatDateLocal(submittedAt)}</p>
-          )}
-        </Card>
+      <div className="min-h-screen flex flex-col bg-gray-100">
+        <PageHeader />
+        <div className="flex-1 flex items-center justify-center p-4">
+          <Card className="max-w-lg w-full p-8 text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
+              <svg viewBox="0 0 20 20" fill="currentColor" className="h-8 w-8 text-green-600">
+                <path
+                  fillRule="evenodd"
+                  d="M16.704 5.29a1 1 0 010 1.415l-7.25 7.25a1 1 0 01-1.415 0l-3.25-3.25a1 1 0 111.415-1.415L8.75 11.836l6.543-6.543a1 1 0 011.411-.003z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <h1 className="text-xl font-bold text-[#1a1a1a] mb-2">Thank You!</h1>
+            <p className="text-gray-600 mb-4">
+              Your feedback has been submitted successfully and will help us improve your
+              experience at {dealerName}.
+            </p>
+            {submittedAt && (
+              <p className="text-xs text-gray-400">Submitted {formatDateLocal(submittedAt)}</p>
+            )}
+          </Card>
+        </div>
+        <PageFooter />
       </div>
     )
   }
 
   if (screen === 'welcome') {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="max-w-lg w-full overflow-hidden">
-          <div className="bg-[#E31837] px-6 py-6 text-center">
-            <div className="text-white text-2xl font-extrabold tracking-tight">MAHINDRA</div>
-            <p className="text-white/90 text-sm mt-1">Test Drive Experience Survey</p>
-          </div>
+      <div className="min-h-screen flex flex-col bg-gray-100">
+        <PageHeader />
+        <div className="flex-1 flex items-center justify-center p-4">
+          <Card className="max-w-lg w-full p-6 sm:p-8">
+            <div className="flex flex-col items-center text-center">
+              <MahindraLogo className="h-16 w-16 text-gray-400 mb-4" />
+              <h1 className="text-2xl font-bold text-[#1a1a1a]">Test Drive Experience Survey</h1>
+              <p className="text-[#E31837] font-semibold text-sm mt-1">Mahindra South Africa</p>
+              <p className="text-gray-500 text-sm mt-3 max-w-sm">
+                Thank you for test driving a Mahindra. Your feedback helps us improve our
+                vehicles and services.
+              </p>
+            </div>
 
-          <div className="p-6 space-y-5">
-            <p className="text-center text-sm text-gray-500">
-              {now.toLocaleDateString('en-ZA', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}{' '}
-              &middot; {now.toLocaleTimeString('en-ZA')}
-            </p>
+            <div className="mt-6 rounded-xl bg-gray-100 py-2.5 text-center">
+              <p className="text-sm text-gray-600">
+                {now.toLocaleDateString('en-ZA', {
+                  weekday: 'long',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}{' '}
+                at {now.toLocaleTimeString('en-ZA', { hour: '2-digit', minute: '2-digit' })}
+              </p>
+            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="rounded-xl bg-gray-100 p-4 text-center">
-                <p className="text-sm font-semibold text-[#1a1a1a]">Takes about 2 minutes</p>
-                <p className="text-xs text-gray-500 mt-1">Quick and easy to complete</p>
+            <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+              <div className="rounded-xl bg-gray-100 p-3 text-center">
+                <p className="text-[11px] font-medium text-[#E31837]">Duration</p>
+                <p className="text-sm font-semibold text-[#1a1a1a] mt-0.5">2-3 minutes</p>
               </div>
-              <div className="rounded-xl bg-gray-100 p-4 text-center">
-                <p className="text-sm font-semibold text-[#1a1a1a]">Your data is protected</p>
-                <p className="text-xs text-gray-500 mt-1">Handled in line with POPIA</p>
+              <div className="rounded-xl bg-gray-100 p-3 text-center">
+                <p className="text-[11px] font-medium text-[#E31837]">Questions</p>
+                <p className="text-sm font-semibold text-[#1a1a1a] mt-0.5">3 questions</p>
+              </div>
+              <div className="rounded-xl bg-gray-100 p-3 text-center">
+                <p className="text-[11px] font-medium text-[#E31837]">Valid for</p>
+                <p className="text-sm font-semibold text-[#1a1a1a] mt-0.5">
+                  {validDays === null ? 'Limited time' : `${validDays} day${validDays === 1 ? '' : 's'}`}
+                </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 rounded-xl border border-gray-200 p-3">
+            <div className="mt-4 rounded-xl border border-gray-200 p-4 text-sm">
+              <p className="font-semibold text-[#1a1a1a] mb-2">Privacy Notice (POPIA Compliance)</p>
+              <p className="text-gray-500 mb-3">
+                In accordance with the{' '}
+                <span className="font-medium text-gray-600">
+                  Protection of Personal Information Act (POPIA)
+                </span>
+                , we are committed to protecting your personal information and your right to
+                privacy.
+              </p>
+
+              <p className="font-semibold text-[#1a1a1a] mb-1">What we collect:</p>
+              <ul className="list-disc list-inside text-gray-500 space-y-0.5 mb-3">
+                <li>Your satisfaction ratings and feedback responses</li>
+                <li>Date and time the survey was completed</li>
+                <li>Device and browser used to complete the survey</li>
+              </ul>
+
+              <p className="font-semibold text-[#1a1a1a] mb-1">How we use your information:</p>
+              <ul className="list-disc list-inside text-gray-500 space-y-0.5 mb-3">
+                <li>To improve our vehicles, products and services</li>
+                <li>To address any concerns or issues raised in your feedback</li>
+                <li>To generate anonymous statistical reports</li>
+                <li>To follow up on low satisfaction ratings</li>
+              </ul>
+
+              <p className="font-semibold text-[#1a1a1a] mb-1">Your rights:</p>
+              <ul className="list-disc list-inside text-gray-500 space-y-0.5 mb-3">
+                <li>You may request access to your personal information</li>
+                <li>You may request correction or deletion of your information</li>
+                <li>You may withdraw consent at any time by contacting us</li>
+              </ul>
+
+              <p className="text-gray-400 text-xs">
+                For queries about your personal information, contact Mahindra South Africa at{' '}
+                <a href="mailto:privacy@mahindra.co.za" className="text-[#E31837] underline">
+                  privacy@mahindra.co.za
+                </a>
+              </p>
+            </div>
+
+            <div className="mt-4 flex items-start gap-3 rounded-xl border border-[#E31837]/30 bg-[#E31837]/5 p-3">
               <Checkbox
                 id="welcome-consent"
                 checked={welcomeConsent}
@@ -284,49 +387,56 @@ export default function App() {
                 className="mt-0.5"
               />
               <Label htmlFor="welcome-consent" className="cursor-pointer font-normal">
-                I consent to my personal information being processed in accordance with the
-                Protection of Personal Information Act (POPIA) for the purpose of this survey.
+                <span className="font-semibold">Required:</span> I have read and understand the
+                Privacy Notice. I consent to Mahindra South Africa collecting, processing, and
+                storing my feedback in accordance with POPIA for the purposes described above.
               </Label>
             </div>
 
             <Button
-              className="w-full"
+              className="w-full mt-4"
               disabled={!welcomeConsent}
               onClick={() => setScreen('survey')}
             >
               Start Survey
             </Button>
-          </div>
-        </Card>
+            <p className="text-center text-xs text-gray-400 mt-2">
+              By proceeding, you confirm that you recently completed a Mahindra test drive.
+            </p>
+          </Card>
+        </div>
+        <PageFooter />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="max-w-lg w-full overflow-hidden">
-        <div className="bg-[#E31837] px-6 py-4 text-center">
-          <div className="text-white text-lg font-extrabold tracking-tight">MAHINDRA</div>
-          <p className="text-white/90 text-xs mt-0.5">Test Drive Experience Survey</p>
-        </div>
+    <div className="min-h-screen flex flex-col bg-gray-100">
+      <PageHeader />
 
-        <div className="p-6">
-          <ProgressStepper stepCount={steps.length} currentStep={stepIndex + 1} />
+      <div className="flex-1 flex flex-col items-center justify-center p-4">
+        <p className="text-center text-sm text-gray-500 mb-2">Test Drive Experience Survey</p>
+        <ProgressStepper stepCount={steps.length} currentStep={stepIndex + 1} />
 
+        <Card className="max-w-lg w-full p-6">
           {currentStep === 'overall' && (
-            <div className="space-y-4">
+            <div>
               <h2 className="text-base font-semibold text-[#1a1a1a]">
                 How would you rate your overall Test Drive Experience at {dealerName}?
               </h2>
+              <p className="text-sm text-slate-500 mt-1">{STEP_SUBTITLES.overall}</p>
+              <hr className="border-gray-200 my-4" />
               <RatingButtons value={overallExperience} onChange={setOverallExperience} />
             </div>
           )}
 
           {currentStep === 'dissatisfaction' && (
-            <div className="space-y-4">
+            <div>
               <h2 className="text-base font-semibold text-[#1a1a1a]">
-                We're sorry to hear that. What could we have done better? Select all that apply.
+                We're sorry to hear that. What could we have done better?
               </h2>
+              <p className="text-sm text-slate-500 mt-1">{STEP_SUBTITLES.dissatisfaction}</p>
+              <hr className="border-gray-200 my-4" />
               <ReasonSelector
                 selectedReasons={selectedReasons}
                 onToggleReason={toggleReason}
@@ -339,38 +449,50 @@ export default function App() {
           )}
 
           {currentStep === 'vehicle' && (
-            <div className="space-y-6">
+            <div>
               <h2 className="text-base font-semibold text-[#1a1a1a]">
                 Based on your test drive at {dealerName}, how would you rate the following
                 aspects of the vehicle?
               </h2>
-              <VehicleRatingRow
-                label="Overall performance"
-                value={vehiclePerformance}
-                onChange={setVehiclePerformance}
-                feedback={vehiclePerformanceFeedback}
-                onFeedbackChange={setVehiclePerformanceFeedback}
-              />
-              <VehicleRatingRow
-                label="Level of comfort"
-                value={vehicleComfort}
-                onChange={setVehicleComfort}
-                feedback={vehicleComfortFeedback}
-                onFeedbackChange={setVehicleComfortFeedback}
-              />
-              <VehicleRatingRow
-                label="Features"
-                value={vehicleFeatures}
-                onChange={setVehicleFeatures}
-                feedback={vehicleFeaturesFeedback}
-                onFeedbackChange={setVehicleFeaturesFeedback}
-              />
+              <p className="text-sm text-slate-500 mt-1">{STEP_SUBTITLES.vehicle}</p>
+              <hr className="border-gray-200 my-4" />
+              <div className="space-y-5">
+                <VehicleRatingRow
+                  letter="a"
+                  label="Overall performance"
+                  value={vehiclePerformance}
+                  onChange={setVehiclePerformance}
+                  feedback={vehiclePerformanceFeedback}
+                  onFeedbackChange={setVehiclePerformanceFeedback}
+                />
+                <VehicleRatingRow
+                  letter="b"
+                  label="Level of comfort"
+                  value={vehicleComfort}
+                  onChange={setVehicleComfort}
+                  feedback={vehicleComfortFeedback}
+                  onFeedbackChange={setVehicleComfortFeedback}
+                />
+                <VehicleRatingRow
+                  letter="c"
+                  label="Features"
+                  value={vehicleFeatures}
+                  onChange={setVehicleFeatures}
+                  feedback={vehicleFeaturesFeedback}
+                  onFeedbackChange={setVehicleFeaturesFeedback}
+                />
+              </div>
             </div>
           )}
 
           {currentStep === 'feedback' && (
-            <div className="space-y-4">
-              <h2 className="text-base font-semibold text-[#1a1a1a]">Almost done!</h2>
+            <div>
+              <h2 className="text-base font-semibold text-[#1a1a1a]">
+                Would you like to share any additional feedback about your test drive at{' '}
+                {dealerName}?
+              </h2>
+              <p className="text-sm text-slate-500 mt-1">{STEP_SUBTITLES.feedback}</p>
+              <hr className="border-gray-200 my-4" />
               <FeedbackTextarea
                 wantsToComment={wantsToComment}
                 onWantsToCommentChange={setWantsToComment}
@@ -384,7 +506,8 @@ export default function App() {
 
           {submitError && <p className="text-sm text-[#E31837] mt-4">{submitError}</p>}
 
-          <div className="flex justify-between mt-6">
+          <hr className="border-gray-200 my-4" />
+          <div className="flex justify-between">
             <Button variant="outline" onClick={handleBack} disabled={stepIndex === 0}>
               Back
             </Button>
@@ -392,8 +515,14 @@ export default function App() {
               {isLastStep ? (isSubmitting ? 'Submitting…' : 'Submit') : 'Next'}
             </Button>
           </div>
-        </div>
-      </Card>
+        </Card>
+
+        <p className="text-center text-xs text-gray-400 mt-4">
+          Survey link valid for {validDays === null ? 'a limited time' : `${validDays} day${validDays === 1 ? '' : 's'}`}
+          {' '}| Your data is protected under POPIA
+        </p>
+      </div>
+      <PageFooter />
     </div>
   )
 }

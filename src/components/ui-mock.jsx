@@ -19,7 +19,7 @@ export function Button({
   ...props
 }) {
   const base =
-    'inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+    'inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-90'
 
   const variants = {
     primary:

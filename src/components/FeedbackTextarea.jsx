@@ -17,6 +17,7 @@ export default function FeedbackTextarea({
             type="button"
             variant={wantsToComment === true ? 'primary' : 'outline'}
             onClick={() => onWantsToCommentChange(true)}
+            className="flex-1"
           >
             Yes
           </Button>
@@ -24,6 +25,7 @@ export default function FeedbackTextarea({
             type="button"
             variant={wantsToComment === false ? 'primary' : 'outline'}
             onClick={() => onWantsToCommentChange(false)}
+            className="flex-1"
           >
             No
           </Button>
