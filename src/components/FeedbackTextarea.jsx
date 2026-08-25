@@ -58,7 +58,7 @@ export default function FeedbackTextarea({
           />
           <Label htmlFor="feedback-consent" className="cursor-pointer font-normal">
             I consent to my feedback being processed in accordance with the Protection of
-            Personal Information Act (POPIA) for the purpose of improving dealership service
+            Personal Information Act (POPIA) for the purpose of improving Kayalami service
             quality.
           </Label>
         </div>

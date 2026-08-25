@@ -12,7 +12,7 @@ const LOW_RATINGS = ['Poor', 'Unacceptable']
 
 const STEP_SUBTITLES = {
   trackVehicle: 'Select the track you drove on, then the vehicle you drove',
-  overall: 'Rate your overall test drive experience at the dealership',
+  overall: 'Rate your overall test drive experience at Kayalami',
   dissatisfaction: 'Help us understand what could have gone better',
   vehicle: 'Please rate each aspect of the vehicle separately',
   feedback: 'Share any additional thoughts about your experience',
@@ -100,7 +100,7 @@ function VehicleRatingRow({ letter, label, value, onChange, feedback, onFeedback
 export default function App() {
   const { surveyId, dealer, expires } = useUrlParams()
   const now = useLiveClock()
-  const dealerName = dealer || 'our dealership'
+  const dealerName = dealer || 'Kayalami'
 
   const [screen, setScreen] = useState('welcome')
   const [welcomeConsent, setWelcomeConsent] = useState(false)
@@ -159,7 +159,7 @@ export default function App() {
     if (reason === 'Other' && selectedReasons.includes('Other')) {
       setOtherDetail('')
     }
-    if (reason === 'Dealership Amenities not satisfactory' && selectedReasons.includes(reason)) {
+    if (reason === 'Kayalami Amenities not satisfactory' && selectedReasons.includes(reason)) {
       setFacility('')
     }
   }
@@ -221,7 +221,7 @@ export default function App() {
       overallExperience,
       dissatisfactionReasons: isDissatisfied ? selectedReasons : null,
       unsatisfactoryFacility:
-        isDissatisfied && selectedReasons.includes('Dealership Amenities not satisfactory')
+        isDissatisfied && selectedReasons.includes('Kayalami Amenities not satisfactory')
           ? facility || null
           : null,
       otherReasonDetail:
@@ -267,7 +267,7 @@ export default function App() {
             <h1 className="text-xl font-bold text-[#1a1a1a] mb-2">Survey Expired</h1>
             <p className="text-gray-600">
               This survey link has expired and is no longer accepting responses. Please contact
-              the dealership if you believe this is an error.
+              Kayalami if you believe this is an error.
             </p>
           </Card>
         </div>
@@ -314,7 +314,7 @@ export default function App() {
           <Card className="max-w-lg w-full p-6 sm:p-8">
             <div className="flex flex-col items-center text-center">
               <MahindraLogo className="h-16 w-16 text-gray-400 mb-4" />
-              <h1 className="text-2xl font-bold text-[#1a1a1a]">Mahindra FOM Test Drive Experience</h1>
+              <h1 className="text-2xl font-bold text-[#1a1a1a]">Mahindra Festival Of Motoring Test Drive Experience</h1>
               <p className="text-[#E31837] font-semibold text-sm mt-1">Mahindra South Africa</p>
               <p className="text-gray-500 text-sm mt-3 max-w-sm">
                 Thank you for test driving a Mahindra. Your feedback helps us improve our
@@ -428,7 +428,7 @@ export default function App() {
       <PageHeader />
 
       <div className="flex-1 flex flex-col items-center justify-center p-4">
-        <p className="text-center text-sm text-gray-500 mb-2">Mahindra FOM Test Drive Experience</p>
+        <p className="text-center text-sm text-gray-500 mb-2">Mahindra Festival Of Motoring Test Drive Experience</p>
         <ProgressStepper stepCount={steps.length} currentStep={stepIndex + 1} />
 
         <Card className="max-w-lg w-full p-6">
