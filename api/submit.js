@@ -4,9 +4,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const webhookUrl = process.env.PABBLY_WEBHOOK_URL
+  const webhookUrl = process.env.PABBLY_FOM_WEBHOOK_URL
   if (!webhookUrl) {
-    console.error('PABBLY_WEBHOOK_URL is not configured')
+    console.error('PABBLY_FOM_WEBHOOK_URL is not configured')
     return res.status(500).json({ error: 'Server misconfiguration' })
   }
 
