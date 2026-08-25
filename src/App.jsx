@@ -14,7 +14,6 @@ const STEP_SUBTITLES = {
   trackVehicle: 'Select the track you drove on, then the vehicle you drove',
   overall: 'Rate your overall test drive experience at Kayalami',
   dissatisfaction: 'Help us understand what could have gone better',
-  vehicle: 'Please rate each aspect of the vehicle separately',
   feedback: 'Share any additional thoughts about your experience',
 }
 
@@ -488,10 +487,12 @@ export default function App() {
           {currentStep === 'vehicle' && (
             <div>
               <h2 className="text-base font-semibold text-[#1a1a1a]">
-                Based on your test drive at {dealerName}, how would you rate the following
-                aspects of the vehicle?
+                Based on your test drive of the {selectedVehicle} at {dealerName}, how would you
+                rate the following aspects of the vehicle?
               </h2>
-              <p className="text-sm text-slate-500 mt-1">{STEP_SUBTITLES.vehicle}</p>
+              <p className="text-sm text-slate-500 mt-1">
+                Please rate each aspect of the {selectedVehicle} separately
+              </p>
               <hr className="border-gray-200 my-4" />
               <div className="space-y-5">
                 <VehicleRatingRow
