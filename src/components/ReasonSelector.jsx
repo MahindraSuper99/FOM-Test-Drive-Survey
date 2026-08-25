@@ -1,12 +1,8 @@
 import { Checkbox, Label } from './ui-mock.jsx'
 
 export const REASONS = [
-  'Route was not suitable for the vehicle',
-  'Sales Consultant was not knowledgeable about the vehicle',
   'Insufficient time given for the test drive',
   'Vehicle was not clean or well-presented',
-  'The Sales Executive / Consultant did not explain vehicle features before the drive',
-  'The Sales Executive / Consultant was not present during the test drive',
   'Vehicle had a technical issue during the test drive',
   'Kayalami Amenities not satisfactory',
   'Other',
