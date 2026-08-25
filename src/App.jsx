@@ -301,7 +301,7 @@ export default function App() {
           <Card className="max-w-lg w-full p-6 sm:p-8">
             <div className="flex flex-col items-center text-center">
               <MahindraLogo className="h-16 w-16 text-gray-400 mb-4" />
-              <h1 className="text-2xl font-bold text-[#1a1a1a]">Test Drive Experience Survey</h1>
+              <h1 className="text-2xl font-bold text-[#1a1a1a]">Mahindra FOM Test Drive Experience</h1>
               <p className="text-[#E31837] font-semibold text-sm mt-1">Mahindra South Africa</p>
               <p className="text-gray-500 text-sm mt-3 max-w-sm">
                 Thank you for test driving a Mahindra. Your feedback helps us improve our
@@ -415,7 +415,7 @@ export default function App() {
       <PageHeader />
 
       <div className="flex-1 flex flex-col items-center justify-center p-4">
-        <p className="text-center text-sm text-gray-500 mb-2">Test Drive Experience Survey</p>
+        <p className="text-center text-sm text-gray-500 mb-2">Mahindra FOM Test Drive Experience</p>
         <ProgressStepper stepCount={steps.length} currentStep={stepIndex + 1} />
 
         <Card className="max-w-lg w-full p-6">
