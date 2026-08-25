@@ -84,7 +84,7 @@ function VehicleRatingRow({ id, letter, label, value, onChange, feedback, onFeed
       {showElaboration && (
         <div>
           <Label htmlFor={`${id}-feedback`} className="block mt-2">
-            Tell us more <span className="text-gray-400">(optional)</span>
+            Tell us more <span className="text-[#E31837]">(mandatory)</span>
           </Label>
           <Textarea
             id={`${id}-feedback`}
@@ -178,7 +178,13 @@ export default function App() {
       return true
     }
     if (currentStep === 'vehicle') {
-      return Boolean(vehiclePerformance && vehicleComfort && vehicleFeatures)
+      if (!vehiclePerformance || !vehicleComfort || !vehicleFeatures) return false
+      if (LOW_RATINGS.includes(vehiclePerformance) && vehiclePerformanceFeedback.trim() === '')
+        return false
+      if (LOW_RATINGS.includes(vehicleComfort) && vehicleComfortFeedback.trim() === '') return false
+      if (LOW_RATINGS.includes(vehicleFeatures) && vehicleFeaturesFeedback.trim() === '')
+        return false
+      return true
     }
     if (currentStep === 'feedback') {
       if (wantsToComment === null) return false
