@@ -36,7 +36,7 @@ The `/api/submit` endpoint only runs under the Vercel runtime (`vercel dev`), no
 
 Set in the Vercel project (see `.env.example`):
 
-- `PABBLY_WEBHOOK_URL` — the Pabbly Connect webhook URL that submissions are forwarded to.
+- `PABBLY_FOM_WEBHOOK_URL` — the Pabbly Connect webhook URL that submissions are forwarded to.
 
 ## Deployment
 
