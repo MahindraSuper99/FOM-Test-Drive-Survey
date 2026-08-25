@@ -5,11 +5,13 @@ import ReasonSelector from './components/ReasonSelector.jsx'
 import FeedbackTextarea from './components/FeedbackTextarea.jsx'
 import ProgressStepper from './components/ProgressStepper.jsx'
 import MahindraLogo from './components/MahindraLogo.jsx'
+import TrackVehicleSelector from './components/TrackVehicleSelector.jsx'
 import { sanitizeInput, formatDateLocal, isExpired } from './utils/helpers.js'
 
 const LOW_RATINGS = ['Poor', 'Unacceptable']
 
 const STEP_SUBTITLES = {
+  trackVehicle: 'Select the track you drove on, then the vehicle you drove',
   overall: 'Rate your overall test drive experience at the dealership',
   dissatisfaction: 'Help us understand what could have gone better',
   vehicle: 'Please rate each aspect of the vehicle separately',
@@ -104,6 +106,9 @@ export default function App() {
   const [welcomeConsent, setWelcomeConsent] = useState(false)
   const [stepIndex, setStepIndex] = useState(0)
 
+  const [selectedTrack, setSelectedTrack] = useState(null)
+  const [selectedVehicle, setSelectedVehicle] = useState(null)
+
   const [overallExperience, setOverallExperience] = useState(null)
 
   const [selectedReasons, setSelectedReasons] = useState([])
@@ -131,7 +136,7 @@ export default function App() {
   const isDissatisfied = LOW_RATINGS.includes(overallExperience)
 
   const steps = useMemo(() => {
-    const list = ['overall']
+    const list = ['trackVehicle', 'overall']
     if (isDissatisfied) list.push('dissatisfaction')
     list.push('vehicle', 'feedback')
     return list
@@ -139,6 +144,11 @@ export default function App() {
 
   const currentStep = steps[stepIndex]
   const isLastStep = stepIndex === steps.length - 1
+
+  function handleTrackChange(track) {
+    setSelectedTrack(track)
+    setSelectedVehicle(null)
+  }
 
   function toggleReason(reason) {
     setSelectedReasons((previous) =>
@@ -155,6 +165,7 @@ export default function App() {
   }
 
   function canProceed() {
+    if (currentStep === 'trackVehicle') return Boolean(selectedTrack && selectedVehicle)
     if (currentStep === 'overall') return Boolean(overallExperience)
     if (currentStep === 'dissatisfaction') {
       if (selectedReasons.length === 0) return false
@@ -205,6 +216,8 @@ export default function App() {
       device: navigator.userAgent,
       responseType: 'Customer',
       reviewStatus: 'New',
+      track: selectedTrack,
+      vehicle: selectedVehicle,
       overallExperience,
       dissatisfactionReasons: isDissatisfied ? selectedReasons : null,
       unsatisfactoryFacility:
@@ -328,7 +341,7 @@ export default function App() {
               </div>
               <div className="rounded-xl bg-gray-100 p-3 text-center">
                 <p className="text-[11px] font-medium text-[#E31837]">Questions</p>
-                <p className="text-sm font-semibold text-[#1a1a1a] mt-0.5">3 questions</p>
+                <p className="text-sm font-semibold text-[#1a1a1a] mt-0.5">4 questions</p>
               </div>
               <div className="rounded-xl bg-gray-100 p-3 text-center">
                 <p className="text-[11px] font-medium text-[#E31837]">Valid for</p>
@@ -419,6 +432,22 @@ export default function App() {
         <ProgressStepper stepCount={steps.length} currentStep={stepIndex + 1} />
 
         <Card className="max-w-lg w-full p-6">
+          {currentStep === 'trackVehicle' && (
+            <div>
+              <h2 className="text-base font-semibold text-[#1a1a1a]">
+                Which track and vehicle did you test drive at {dealerName}?
+              </h2>
+              <p className="text-sm text-slate-500 mt-1">{STEP_SUBTITLES.trackVehicle}</p>
+              <hr className="border-gray-200 my-4" />
+              <TrackVehicleSelector
+                track={selectedTrack}
+                onTrackChange={handleTrackChange}
+                vehicle={selectedVehicle}
+                onVehicleChange={setSelectedVehicle}
+              />
+            </div>
+          )}
+
           {currentStep === 'overall' && (
             <div>
               <h2 className="text-base font-semibold text-[#1a1a1a]">
