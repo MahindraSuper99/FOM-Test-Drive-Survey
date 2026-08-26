@@ -164,7 +164,7 @@ export default function App() {
     if (reason === 'Other' && selectedReasons.includes('Other')) {
       setOtherDetail('')
     }
-    if (reason === 'Mahindra Stand Amenities not satisfactory' && selectedReasons.includes(reason)) {
+    if (reason === 'Mahindra Stand not satisfactory' && selectedReasons.includes(reason)) {
       setFacility('')
     }
   }
@@ -232,7 +232,7 @@ export default function App() {
       overallExperience,
       dissatisfactionReasons: isDissatisfied ? selectedReasons : null,
       unsatisfactoryFacility:
-        isDissatisfied && selectedReasons.includes('Mahindra Stand Amenities not satisfactory')
+        isDissatisfied && selectedReasons.includes('Mahindra Stand not satisfactory')
           ? facility || null
           : null,
       otherReasonDetail:
