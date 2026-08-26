@@ -8,7 +8,7 @@ export const REASONS = [
   'Other',
 ]
 
-const FACILITIES = ['Waiting area', 'Restrooms', 'Signage', 'Cleanliness']
+const FACILITIES = ['Waiting area', 'Signage', 'Cleanliness']
 
 const AMENITIES_REASON = 'Mahindra Stand not satisfactory'
 const OTHER_REASON = 'Other'
