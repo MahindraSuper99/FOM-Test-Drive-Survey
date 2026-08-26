@@ -142,9 +142,9 @@ export default function App() {
   const isDissatisfied = LOW_RATINGS.includes(overallExperience)
 
   const steps = useMemo(() => {
-    const list = ['trackVehicle', 'overall']
+    const list = ['trackVehicle', 'vehicle', 'overall']
     if (isDissatisfied) list.push('dissatisfaction')
-    list.push('vehicle', 'feedback')
+    list.push('feedback')
     return list
   }, [isDissatisfied])
 
