@@ -117,7 +117,7 @@ export default function App() {
   const [overallExperience, setOverallExperience] = useState(null)
 
   const [selectedReasons, setSelectedReasons] = useState([])
-  const [facility, setFacility] = useState('')
+  const [standIssues, setStandIssues] = useState([])
   const [otherDetail, setOtherDetail] = useState('')
 
   const [vehiclePerformance, setVehiclePerformance] = useState(null)
@@ -165,8 +165,14 @@ export default function App() {
       setOtherDetail('')
     }
     if (reason === 'Mahindra Stand not satisfactory' && selectedReasons.includes(reason)) {
-      setFacility('')
+      setStandIssues([])
     }
+  }
+
+  function toggleStandIssue(issue) {
+    setStandIssues((previous) =>
+      previous.includes(issue) ? previous.filter((item) => item !== issue) : [...previous, issue],
+    )
   }
 
   function canProceed() {
@@ -175,6 +181,11 @@ export default function App() {
     if (currentStep === 'dissatisfaction') {
       if (selectedReasons.length === 0) return false
       if (selectedReasons.includes('Other') && otherDetail.trim() === '') return false
+      if (
+        selectedReasons.includes('Mahindra Stand not satisfactory') &&
+        standIssues.length === 0
+      )
+        return false
       return true
     }
     if (currentStep === 'vehicle') {
@@ -233,7 +244,7 @@ export default function App() {
       dissatisfactionReasons: isDissatisfied ? selectedReasons : null,
       unsatisfactoryFacility:
         isDissatisfied && selectedReasons.includes('Mahindra Stand not satisfactory')
-          ? facility || null
+          ? standIssues
           : null,
       otherReasonDetail:
         isDissatisfied && selectedReasons.includes('Other')
@@ -484,8 +495,8 @@ export default function App() {
               <ReasonSelector
                 selectedReasons={selectedReasons}
                 onToggleReason={toggleReason}
-                facility={facility}
-                onFacilityChange={setFacility}
+                standIssues={standIssues}
+                onToggleStandIssue={toggleStandIssue}
                 otherDetail={otherDetail}
                 onOtherDetailChange={setOtherDetail}
               />

@@ -8,7 +8,12 @@ export const REASONS = [
   'Other',
 ]
 
-const FACILITIES = ['Waiting area', 'Signage', 'Cleanliness']
+export const STAND_ISSUES = [
+  'Not well Organised',
+  'Not easily Accessible',
+  'Unhelpful Staff',
+  'Vehicles not well Displayed',
+]
 
 const AMENITIES_REASON = 'Mahindra Stand not satisfactory'
 const OTHER_REASON = 'Other'
@@ -16,8 +21,8 @@ const OTHER_REASON = 'Other'
 export default function ReasonSelector({
   selectedReasons,
   onToggleReason,
-  facility,
-  onFacilityChange,
+  standIssues,
+  onToggleStandIssue,
   otherDetail,
   onOtherDetailChange,
 }) {
@@ -41,23 +46,30 @@ export default function ReasonSelector({
             </div>
 
             {reason === AMENITIES_REASON && checked && (
-              <div className="ml-8 pl-3">
-                <Label htmlFor="facility-select">
-                  Which facility? <span className="text-gray-400">(optional)</span>
+              <div className="ml-8 pl-3 space-y-2">
+                <Label className="block">
+                  What was the issue? <span className="text-[#E31837]">(mandatory)</span>
                 </Label>
-                <select
-                  id="facility-select"
-                  value={facility ?? ''}
-                  onChange={(event) => onFacilityChange(event.target.value)}
-                  className="mt-1 w-full rounded-xl border border-gray-300 p-2.5 text-sm text-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-[#E31837] focus:border-transparent"
-                >
-                  <option value="">Select a facility</option>
-                  {FACILITIES.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+                {STAND_ISSUES.map((issue) => {
+                  const issueChecked = standIssues.includes(issue)
+                  const issueId = `stand-issue-${issue}`
+                  return (
+                    <div
+                      key={issue}
+                      className="flex items-start gap-3 rounded-xl border border-gray-200 p-3"
+                    >
+                      <Checkbox
+                        id={issueId}
+                        checked={issueChecked}
+                        onChange={() => onToggleStandIssue(issue)}
+                        className="mt-0.5"
+                      />
+                      <Label htmlFor={issueId} className="cursor-pointer font-normal">
+                        {issue}
+                      </Label>
+                    </div>
+                  )
+                })}
               </div>
             )}
 
