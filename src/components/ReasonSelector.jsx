@@ -4,13 +4,13 @@ export const REASONS = [
   'Insufficient time given for the test drive',
   'Vehicle was not clean or well-presented',
   'Vehicle had a technical issue during the test drive',
-  'Kayalami Amenities not satisfactory',
+  'Mahindra Stand Amenities not satisfactory',
   'Other',
 ]
 
 const FACILITIES = ['Waiting area', 'Restrooms', 'Signage', 'Cleanliness']
 
-const AMENITIES_REASON = 'Kayalami Amenities not satisfactory'
+const AMENITIES_REASON = 'Mahindra Stand Amenities not satisfactory'
 const OTHER_REASON = 'Other'
 
 export default function ReasonSelector({
