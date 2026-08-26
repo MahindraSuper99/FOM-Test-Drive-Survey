@@ -1,5 +1,5 @@
 export const TRACKS = {
-  'Speed Track at Pits': ['XUV700', 'XUV 3XO', 'Scorpio N'],
+  'Speed Track': ['XUV700', 'XUV 3XO', 'Scorpio N'],
   '4x4 Track': ['Dawn', 'Scorpio N'],
   'Self Handling Track': ['XUV700', 'Scorpio N', 'XUV 3XO'],
 }
