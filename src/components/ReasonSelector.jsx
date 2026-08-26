@@ -9,10 +9,10 @@ export const REASONS = [
 ]
 
 export const STAND_ISSUES = [
-  'Not well Organised',
-  'Not easily Accessible',
-  'Unhelpful Staff',
-  'Vehicles not well Displayed',
+  'Too crowded/excessive waiting times to enter',
+  'Staff lacked vehicle/tech knowledge',
+  'Unclear test drive/track sign-up process',
+  'Vehicles not well displayed',
 ]
 
 const AMENITIES_REASON = 'Mahindra Stand not satisfactory'
