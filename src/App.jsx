@@ -12,7 +12,7 @@ const LOW_RATINGS = ['Poor', 'Unacceptable']
 
 const STEP_SUBTITLES = {
   trackVehicle: 'Select the track you drove on, then the vehicle you drove',
-  overall: 'Rate your overall test drive experience at Kayalami',
+  overall: 'Rate your overall test drive experience',
   dissatisfaction: 'Help us understand what could have gone better',
   feedback: 'Share any additional thoughts about your experience',
 }
@@ -103,8 +103,9 @@ function VehicleRatingRow({ id, letter, label, value, onChange, feedback, onFeed
 export default function App() {
   const { surveyId, dealer, expires } = useUrlParams()
   const now = useLiveClock()
-  const dealerName = dealer || 'Kayalami'
-  const venueName = `the Mahindra Festival of Motoring ${dealerName} event`
+  const venueName = dealer
+    ? `the Mahindra Festival of Motoring ${dealer} event`
+    : 'the Mahindra Festival of Motoring event'
 
   const [screen, setScreen] = useState('welcome')
   const [welcomeConsent, setWelcomeConsent] = useState(false)
@@ -289,7 +290,7 @@ export default function App() {
             <h1 className="text-xl font-bold text-[#1a1a1a] mb-2">Survey Expired</h1>
             <p className="text-gray-600">
               This survey link has expired and is no longer accepting responses. Please contact
-              Kayalami if you believe this is an error.
+              the dealership if you believe this is an error.
             </p>
           </Card>
         </div>
