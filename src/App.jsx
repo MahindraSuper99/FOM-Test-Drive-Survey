@@ -247,10 +247,7 @@ export default function App() {
         isDissatisfied && selectedReasons.includes('Mahindra Stand not satisfactory')
           ? standIssues.map((issue) => `Mahindra Stand - ${issue}`)
           : null,
-      otherReasonDetail:
-        isDissatisfied && selectedReasons.includes('Other')
-          ? sanitizeInput(otherDetail.trim())
-          : null,
+      otherReasonDetail: null,
       vehiclePerformance,
       vehicleComfort,
       vehicleFeatures,
