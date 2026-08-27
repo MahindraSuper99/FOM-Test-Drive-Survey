@@ -245,7 +245,7 @@ export default function App() {
       dissatisfactionReasons: isDissatisfied ? selectedReasons : null,
       unsatisfactoryFacility:
         isDissatisfied && selectedReasons.includes('Mahindra Stand not satisfactory')
-          ? standIssues
+          ? standIssues.map((issue) => `Mahindra Stand - ${issue}`)
           : null,
       otherReasonDetail:
         isDissatisfied && selectedReasons.includes('Other')
